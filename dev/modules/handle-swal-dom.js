@@ -69,7 +69,7 @@ var openModal = function(callback) {
   addClass($modal, 'showSweetAlert');
   removeClass($modal, 'hideSweetAlert');
 
-  window.previousActiveElement = document.activeElement;
+  typeof window !== 'undefined' && (window.previousActiveElement = document.activeElement);
   var $okButton = $modal.querySelector('button.confirm');
   $okButton.focus();
 
@@ -83,7 +83,7 @@ var openModal = function(callback) {
     var timerCallback = callback;
     $modal.timeout = setTimeout(function() {
       var doneFunctionExists = ((timerCallback || null) && $modal.getAttribute('data-has-done-function') === 'true');
-      if (doneFunctionExists) { 
+      if (doneFunctionExists) {
         timerCallback(null);
       }
       else {
@@ -135,7 +135,7 @@ var fixVerticalPosition = function() {
 };
 
 
-export { 
+export {
   sweetAlertInitialize,
   getModal,
   getOverlay,

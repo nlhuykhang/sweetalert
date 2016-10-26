@@ -22,21 +22,21 @@ var hexToRgb = function(hex) {
  * Check if the user is using Internet Explorer 8 (for fallbacks)
  */
 var isIE8 = function() {
-  return (window.attachEvent && !window.addEventListener);
+  return (typeof window !== 'undefined' && window.attachEvent && !window.addEventListener);
 };
 
 /*
  * IE compatible logging for developers
  */
 var logStr = function(string) {
-  if (window.console) {
+  if (typeof window !== 'undefined' && window.console) {
     // IE...
     window.console.log('SweetAlert: ' + string);
   }
 };
 
 /*
- * Set hover, active and focus-states for buttons 
+ * Set hover, active and focus-states for buttons
  * (source: http://www.sitepoint.com/javascript-generate-lighter-darker-color)
  */
 var colorLuminance = function(hex, lum) {

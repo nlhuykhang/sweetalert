@@ -122,7 +122,7 @@ var fireClick = function(node) {
   if (typeof MouseEvent === 'function') {
     // Up-to-date approach
     var mevt = new MouseEvent('click', {
-      view: window,
+      view: typeof window !== 'undefined' && window,
       bubbles: false,
       cancelable: true
     });
@@ -144,16 +144,16 @@ var stopEventPropagation = function(e) {
   if (typeof e.stopPropagation === 'function') {
     e.stopPropagation();
     e.preventDefault();
-  } else if (window.event && window.event.hasOwnProperty('cancelBubble')) {
+  } else if (typeof window !== 'undefined' && window.event && window.event.hasOwnProperty('cancelBubble')) {
     window.event.cancelBubble = true;
   }
 };
 
-export { 
-  hasClass, addClass, removeClass, 
-  escapeHtml, 
-  _show, show, _hide, hide, 
-  isDescendant, 
+export {
+  hasClass, addClass, removeClass,
+  escapeHtml,
+  _show, show, _hide, hide,
+  isDescendant,
   getTopMargin,
   fadeIn, fadeOut,
   fireClick,

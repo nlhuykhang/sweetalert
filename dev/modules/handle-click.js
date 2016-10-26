@@ -7,7 +7,7 @@ import { hasClass, isDescendant } from './handle-dom';
  * User clicked on "Confirm"/"OK" or "Cancel"
  */
 var handleButton = function(event, params, modal) {
-  var e = event || window.event;
+  var e = event || (typeof window !== 'undefined' && window.event);
   var target = e.target || e.srcElement;
 
   var targetedConfirm = target.className.indexOf('confirm') !== -1;

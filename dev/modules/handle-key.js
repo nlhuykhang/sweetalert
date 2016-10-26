@@ -3,7 +3,7 @@ import { setFocusStyle } from './handle-swal-dom';
 
 
 var handleKeyDown = function(event, params, modal) {
-  var e = event || window.event;
+  var e = event || (typeof window !== 'undefined' && window.event);
   var keyCode = e.keyCode || e.which;
 
   var $okButton     = modal.querySelector('button.confirm');

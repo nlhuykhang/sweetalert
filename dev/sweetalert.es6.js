@@ -153,20 +153,21 @@ export default sweetAlert = swal = function() {
   previousWindowKeyDown = window.onkeydown;
 
   var onKeyEvent = (e) => handleKeyDown(e, params, modal);
-  window.onkeydown = onKeyEvent;
+  if (typeof window !== 'undefined') {
+    window.onkeydown = onKeyEvent;
+    window.onfocus = function () {
+      // When the user has focused away and focused back from the whole window.
+      setTimeout(function () {
+        // Put in a timeout to jump out of the event sequence.
+        // Calling focus() in the event sequence confuses things.
+        if (lastFocusedButton !== undefined) {
+          lastFocusedButton.focus();
+          lastFocusedButton = undefined;
+        }
+      }, 0);
+    };
+  }
 
-  window.onfocus = function () {
-    // When the user has focused away and focused back from the whole window.
-    setTimeout(function () {
-      // Put in a timeout to jump out of the event sequence.
-      // Calling focus() in the event sequence confuses things.
-      if (lastFocusedButton !== undefined) {
-        lastFocusedButton.focus();
-        lastFocusedButton = undefined;
-      }
-    }, 0);
-  };
-  
   // Show alert with enabled buttons always
   swal.enableButtons();
 };
@@ -228,10 +229,13 @@ sweetAlert.close = swal.close = function() {
   removeClass(document.body, 'stop-scrolling');
 
   // Reset the page to its previous state
-  window.onkeydown = previousWindowKeyDown;
-  if (window.previousActiveElement) {
-    window.previousActiveElement.focus();
+  if (typeof window !== 'undefined') {
+    window.onkeydown = previousWindowKeyDown;
+    if (window.previousActiveElement) {
+      typeof window !== 'undefined' && window.previousActiveElement.focus();
+    }
   }
+
   lastFocusedButton = undefined;
   clearTimeout(modal.timeout);
 
